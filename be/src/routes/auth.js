@@ -1,4 +1,4 @@
-import controlers, { auth } from "controlers"
+import { auth } from "controlers"
 
 module.exports = express =>
   new express.Router()

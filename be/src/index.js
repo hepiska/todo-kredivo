@@ -3,6 +3,7 @@ import useRouter from "routes"
 import bodyParser from "body-parser"
 import morgan from "morgan"
 import { errorMidleware } from "libs/errorMidleware"
+import resJsonOnData from "libs/resJsonOnData"
 // import cookieParser from "cookie-parser"
 const express = require("express")
 
@@ -17,10 +18,12 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
 app.use(bodyParser.json())
+app.use(resJsonOnData)
 
 app.use("/", useRouter(express))
 
 app.use(errorMidleware)
+
 app.listen({ port: PORT }, () => {
   console.log(`server run on port ${PORT}`)
 })

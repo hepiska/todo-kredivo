@@ -10,7 +10,17 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       title: {
+        allowNull: false,
         type: Sequelize.STRING
+      },
+      priority: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      isDone: {
+        allowNull: false,
+        defaultValue: false,
+        type: Sequelize.BOOLEAN
       },
       note: {
         type: Sequelize.TEXT
