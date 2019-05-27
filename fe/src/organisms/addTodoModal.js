@@ -8,7 +8,8 @@ import Textarea from 'atoms/textarea'
 import Button from 'atoms/button'
 import FormValidation from 'molecules/formValidation'
 import Modal from 'molecules/modal'
-import { getall } from 'modules/todo'
+import { getall, editTodo } from 'modules/todo'
+import { authServices } from 'utils/services'
 import { shadows, colors } from 'utils/constants'
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
@@ -38,35 +39,41 @@ const AddTodoModal = (props) => {
   const [childChange, setChildChange] = useState(false)
   const [fetching, setFetching] = useState(false)
   const [errorMessage, setErrorMessage] = useState(false)
-
+  const initialData = {
+    title: '',
+    note: '',
+    priority: 3,
+  }
   const onSubmitForm = async (data) => {
-    console.log(data)
     if (data.type === 'valid') {
       setFetching(true)
       setErrorMessage(false)
       try {
+        if (props.selectedData) {
+          props.editTodo(props.selectedData.id, data.data)
+          setFetching(false)
+        } else {
+          const res = await authServices.post('/todo', data.data)
+          setFetching(false)
+          props.getall({})
+        }
 
-        setFetching(false)
-
-        props.history.push('/')
+        props.closeModal()
+        // props.history.push('/')
       } catch (err) {
-        // setErrorMessage(err.response.data.data.message)
+        setErrorMessage(err.response.data.data.message)
         setFetching(false)
       }
     }
   }
   return (
     <Modal
-      title='Tambah list'
+      title={props.selectedData ? 'Edit List' : 'Tambah list'}
       isOpen={props.isOpen}
     >
       <Wrapper width='100%'>
         <FormValidation
-          intialData={{
-            title: '',
-            note: '',
-            priority: 3,
-          }}
+          intialData={props.selectedData || initialData}
           submitToparent={onSubmitForm}
           updateParent={() => setChildChange(!childChange)}
           validationParams={{
@@ -117,12 +124,26 @@ const AddTodoModal = (props) => {
               <Wrapper width='100%' direction='row' justify='flex-end' align='center' margin='16px 0 0'>
                 {fetching ? <Loaders type="Bars" color={colors.thisBlue} height={60} width={80} /> :
                   (
-                    <Button
-                      background={colors.thisBlue}
-                      onClick={onSubmit}
-                    >
-                      Log In
-                    </Button>
+                    <Wrapper direction='row'>
+                      <Button
+                        margin='0px 16px'
+                        size='content'
+                        padding='8px 12px'
+                        background={colors.redError}
+                        onClick={props.closeModal}
+                      >
+                        batal
+                      </Button>
+                      <Button
+                        size='content'
+                        padding='8px 12px'
+                        background={colors.thisBlue}
+                        onClick={onSubmit}
+                      >
+                        Simpan
+                      </Button>
+                    </Wrapper>
+
                   )}
               </Wrapper>
             </div>
@@ -137,6 +158,7 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       getall,
+      editTodo,
     },
     dispatch,
   )

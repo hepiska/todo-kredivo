@@ -41,7 +41,7 @@ const userDA = {
 
     const newData = { ...oldData.dataValues, ...data }
 
-    return model.Todo.update(newData, { returning: true, where: { id } }).then(res => res.dataValues)
+    return oldData.update(newData).then(res => res.dataValues)
   },
 
   findOne: id => {

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Wrapper } from 'atoms'
 import Font from 'atoms/font'
@@ -19,9 +19,18 @@ left: 0px;
 
 
 const Header = (props) => {
+  const [isModalOpen, setModal] = useState(false)
   const logout = () => {
     props.LOGOUT()
     props.history.push('/login')
+  }
+
+  const closeModal = () => {
+    setModal(false)
+  }
+
+  const openModal = () => {
+    setModal(true)
   }
 
   return (
@@ -35,13 +44,13 @@ const Header = (props) => {
       direction='row'
       shadow={shadows.idle}
     >
-      <AddTodoModal isOpen />
+      <AddTodoModal isOpen={isModalOpen} closeModal={closeModal} />
       <Wrapper>
         <Font color={colors.thisBlue} size='22px'>  My list </Font>
       </Wrapper>
       {props.isAuth && (
         <Wrapper direction='row'>
-          <Button size='content' padding='8px 12px' margin='0px 8px' background={colors.thisBlue}>add todos</Button>
+          <Button size='content' onClick={openModal} padding='8px 12px' margin='0px 8px' background={colors.thisBlue}>add todos</Button>
           <Button size='content' onClick={logout} padding='8px 12px' margin='0px 8px' background={colors.redError}>logout</Button>
         </Wrapper>
       )}

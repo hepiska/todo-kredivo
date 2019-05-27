@@ -82,6 +82,8 @@ const todoControler = {
 
       const newTodo = await todoDa.update(req.params.id, params)
 
+      console.log("---", newTodo)
+
       return res.json(newTodo)
 
     } catch (error) {
