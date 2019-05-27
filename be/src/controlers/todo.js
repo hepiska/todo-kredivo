@@ -66,7 +66,10 @@ const todoControler = {
             break
         }
       }
-      const todo = await todoDa.getByUser(user_id, { filter, sort: params.sort, skip: params.skip, limit: params.limit })
+
+      const todo = await todoDa.getByUser(user_id,
+        { filter, sort: params.sort, skip: params.skip, limit: params.limit })
+
 
       return res.json(todo)
     } catch (error) {
