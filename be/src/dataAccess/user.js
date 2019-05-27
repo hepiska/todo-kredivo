@@ -1,4 +1,4 @@
-import model from "db/models"
+import model from "../db/models"
 
 const userDA = {
   create: data => {

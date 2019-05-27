@@ -10,11 +10,12 @@ module.exports = {
     "logging": true,
   },
   "test": {
-    "username": "root",
-    "password": null,
-    "database": "database_test",
+    "username": "ego",
+    "password": "ego",
+    "database": "todo_test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "postgres",
+    "logging": false,
   },
   "production": {
     "username": process.env.DB_USERNAME || "",
