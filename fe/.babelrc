@@ -1,0 +1,31 @@
+{
+  "presets": [
+    "react", 
+    ["env",
+    {
+        "targets": {
+            "browsers": "last 2 versions"
+        },
+        "loose": true,
+        "modules": false
+    }
+    ]
+  ],
+  "plugins": [
+    "babel-plugin-transform-class-properties",
+    "babel-plugin-transform-object-rest-spread",
+    "syntax-dynamic-import",
+      ["module-resolver", {
+        "root": ["./src"],
+        "alias":{
+            "components":"./src/components",
+            "blocks":"./src/blocks",
+            "modules":"./src/modules",
+            "pages": "./src/pages",
+            "graphQuery":"./src/graphQuery",
+            "utils":"./src/utils",
+            "img":"./src/img"
+        }
+      }]
+  ]
+}

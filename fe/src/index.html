@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="homeScreen/tab_icon.png">
+  <title>Todo</title>
+  <base href="/" />
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Todo">
+
+  <!-- Add to homescreen for Safari on iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Todo">
+  <meta name="google-signin-client_id"
+    content="63896445755-5g0adkj92f827cvn6094dd46gdg9tjki.apps.googleusercontent.com">
+  <link rel="apple-touch-icon" href="homeScreen/ic_pwa48.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="homeScreen/ic_pwa168.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="homeScreen/ic_pwa192.png">
+  <link rel="apple-touch-icon" sizes="167x167" href="homeScreen/ic_pwa168.png">
+  <link rel="apple-touch-startup-image" href="homeScreen/ic_pwa512.png">
+  <link rel="icon" type="image/png" sizes="144x144" href="homeScreen/ic_pwa144.png">
+  <link rel="icon" type="image/png" sizes="72x72" href="homeScreen/ic_pwa72.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="homeScreen/ic_pwa96.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="homeScreen/ic_pwa48.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="homeScreen/ic_pwa32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="homeScreen/ic_pwa16.png">
+</head>
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    margin: 0px;
+    width: 100%;
+    background: #fbfdff;
+  }
+
+  body ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 0;
+    height: 0;
+
+  }
+
+  input:focus,
+  textarea:focus,
+  button:focus {
+    outline: none;
+  }
+
+  #onWaitloader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    /* Safari */
+    animation: spin 2s linear infinite;
+  }
+
+  #onWaitCenterDev {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    padding-top: 45vh;
+  }
+
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  #pwa--header {
+    width: 100%;
+    position: fixed;
+    background-color: #fff;
+    z-index: 10;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, .12), 0 3px 12px 0 rgba(0, 0, 0, .06);
+  }
+
+  #pwa--header #navbar {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    height: 68px;
+    padding: 10px 10%;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative;
+  }
+
+  #pwa--header #icon-cornetto {
+    height: 117px;
+    width: 197px;
+  }
+
+  #pwa--header #cornetto-brand {
+    left: 10px;
+    top: 5px;
+  }
+
+  #pwa--header #wrapper {
+    position: relative;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #pwa--header #icon-x {
+    margin-left: 20px;
+  }
+</style>
+
+<body>
+
+  <div id="modal"></div>
+  <div id="index">
+    <header id="pwa--header">
+      <div id="navbar">
+        <div id="wrapper">
+          <!-- place holder pwa navbar -->
+        </div>
+      </div>
+    </header>
+    <div id="onWaitCenterDev">
+      <div id="onWaitloader" />
+    </div>
+    <noscript>
+      <div
+        style="position: fixed; display: flex; z-index: 1000000; left: auto; color: rgb(255, 255, 255); justify-content: center; align-items: center; bottom: 50px; background: rgba(0, 0, 0, 0.5); width: 100%; height: 100px;">
+        <h2>kamu mematikan fungsi javascript si browser kamu, aktivkan javascript kamu untuk pengalaman yang lebih baik
+        </h2>
+        <a href="https://www.enable-javascript.com/id/">klik disini untuk tau cara mengaktifkan javascript</a>
+      </div>
+    </noscript>
+  </div>
+</body>
+<style>
+  body {
+    margin: 0px;
+    width: 100%;
+    background: #fbfdff;
+  }
+
+  @font-face {
+    font-family: 'Linotte';
+    font-style: normal;
+    font-weight: 300;
+    src: url(fonts/Linotte-light.ttf) format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Linotte';
+    font-style: normal;
+    font-weight: 400;
+    src: url(fonts/Linotte-regular.ttf) format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Linotte';
+    font-style: normal;
+    font-weight: 500;
+    src: url(fonts/Linotte-semibold.ttf) format('truetype');
+  }
+
+
+  body ::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 0;
+    height: 0;
+
+  }
+
+  input:focus,
+  textarea:focus,
+  button:focus {
+    outline: none;
+  }
+</style>
+<script>
+  // if ('serviceWorker' in navigator) {
+  //   window.addEventListener('load', () => {
+  //     navigator.serviceWorker.register('/OneSignalSDKWorker.js').then((registration) => {
+  //       // Registration was successful
+  //       if (registration.waiting) {
+  //         registration.postMessage({ action: 'skipWaiting' })
+  //       }
+  //       registration.update()
+  //       console.log('ServiceWorker registration successful with scope: ', registration.scope)
+  //     }).catch((err) => {
+  //       // registration failed :(
+  //       console.log('ServiceWorker registration failed: ', err)
+  //     })
+  //   })
+  // }
+</script>
+
+</html>

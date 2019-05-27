@@ -1,0 +1,4 @@
+dist/*
+stories
+node_modules
+src/sw.js

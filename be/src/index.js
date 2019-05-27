@@ -1,9 +1,10 @@
-
 import useRouter from "routes"
 import bodyParser from "body-parser"
-import morgan from "morgan"
 import { errorMidleware } from "libs/errorMidleware"
 import resJsonOnData from "libs/resJsonOnData"
+import cors from "cors"
+import morgan from "morgan"
+
 // import cookieParser from "cookie-parser"
 const express = require("express")
 
@@ -14,6 +15,7 @@ const app = express()
 
 // parse application/x-www-form-urlencoded
 app.use(morgan("combined"))
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 // parse application/json
