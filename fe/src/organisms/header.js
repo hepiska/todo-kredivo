@@ -35,6 +35,8 @@ const Header = (props) => {
 
   return (
     <FixedWrapper
+      zIndex='10'
+      background='white'
       position='fixed'
       justify='space-between'
       radius='0px'

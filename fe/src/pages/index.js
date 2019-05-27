@@ -17,9 +17,10 @@ import Header from 'organisms/header'
 const Container = styled.div`
   max-width: 720px;
   z-index: 10;
+  height: 100vh;
   margin: 0px auto;
   background-color:${colors.background};
-  /* overflow: hidden; */
+  overflow: hidden;
 `
 
 // please arrage path asc alfabetical

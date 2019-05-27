@@ -1,11 +1,11 @@
-import { history } from 'localhistory'
 import { obj2qstr } from 'utils/helper'
 import { authServices } from 'utils/services'
 
 const type = {
   GETALL: 'todo/getall',
   EDIT: 'todo/edit',
-  DELETE: 'todo/delete'
+  DELETE: 'todo/delete',
+  ADD: 'todo/add'
 }
 
 
@@ -29,6 +29,9 @@ export default (state = initialState, action) => {
     case type.DELETE:
       newState = [...newState].filter(tod => tod.id !== action.payload.id)
       return newState
+    case type.ADD:
+      newState = [...newState, ...action.payload]
+      return newState
     default:
       return [...state]
 
@@ -44,6 +47,6 @@ export const getall = (query) => {
 }
 
 export const editTodo = (id, data) => (dispatch) => authServices.put(`/todo/${id}`, data).then(res => dispatch({ type: type.EDIT, payload: res.data.data }))
-
+export const addTodo = (data) => ({ type: type.ADD, payload: data })
 export const deleteTodo = (id) => (dispatch) => authServices.delete(`/todo/${id}`).then(() => dispatch({ type: type.DELETE, payload: { id } }))
 // export const LOGOUT = () => ({ type: type.LOGOUT, payload: '' })

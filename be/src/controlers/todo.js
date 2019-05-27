@@ -66,7 +66,7 @@ const todoControler = {
             break
         }
       }
-      const todo = await todoDa.getByUser(user_id, { filter, skip: params.skip, limit: params.limit })
+      const todo = await todoDa.getByUser(user_id, { filter, sort: params.sort, skip: params.skip, limit: params.limit })
 
       return res.json(todo)
     } catch (error) {
@@ -82,7 +82,6 @@ const todoControler = {
 
       const newTodo = await todoDa.update(req.params.id, params)
 
-      console.log("---", newTodo)
 
       return res.json(newTodo)
 

@@ -1,49 +1,117 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { getall, editTodo, deleteTodo } from 'modules/todo'
+import { getall, editTodo, deleteTodo, addTodo } from 'modules/todo'
+import { obj2qstr } from 'utils/helper'
+import Fields from 'atoms/field'
+import Font from 'atoms/font'
 import { Wrapper, } from 'atoms'
+import { authServices } from 'utils/services'
 import { connect } from 'react-redux'
 import TodoCard from 'molecules/todoCard'
 import AddTodoModal from 'organisms/addTodoModal'
 import { bindActionCreators } from 'redux'
 
+const AbsWrapper = styled(Wrapper)`
+  top:0;
+  left:0;
+`
+
+
+const Dropdown = (props) => {
+  const onChange = (e) => {
+    const data = { name: props.name, value: e.target.value }
+    props.onChange({ target: data })
+  }
+  return (
+    <Wrapper direction='row' justify='flex-start'  >
+      <Font margin='0px 20px 0px 0px'>{props.label}</Font>
+      <select onChange={onChange} value={props.value}>
+        {props.options.map(({ val, label }) => <option key={val} value={val}>{label}</option>)}
+      </select>
+
+    </Wrapper >
+  )
+}
 
 const MainPage = (props) => {
   const [isListOpen, setListOpen] = useState(false)
+  const [sort, setSort] = useState(1)
+  const [filter, setfilter] = useState('')
   const [fetching, setFetching] = useState(false)
+  const [isEndofData, setIsEndOfData] = useState(false)
   const [value, setvalue] = useState('')
   const [selectedData, setSelectedData] = useState(null)
   const [errorMessage, setErrorMessage] = useState(false)
-  const [isModalOpen, setModal] = useState(true)
-  const lastSkip = 0
-  const lastPos = 0
-  const skip = 0
+  const [isModalOpen, setModal] = useState(false)
+  let lastSkip = 0
+  let lastPos = 0
+  let skip = 0
   const defaultLimit = 10
-  useEffect(() => { props.getall('') }, [])
+  useEffect(() => {
+    const params = {}
+    if (value) {
+      params.q = value
+    }
+    if (sort) {
+      params.sort = sort
+    }
+    if (filter) {
+      params.filter = filter
+    }
+    props.getall(params)
+  }, [value, sort, filter])
+
+  const onSearch = ({ target }) => {
+    setvalue(target.value)
+  }
+
+  const fetchData = (inskip, limit) => {
+    const params = {}
+    if (value) {
+      params.q = value
+    }
+    if (sort) {
+      params.sort = sort
+    }
+    if (filter) {
+      params.filter = filter
+    }
+    const qs = obj2qstr({ ...params, skip: inskip, limit, })
+    setFetching(true)
+    authServices.get(`/todo/user${qs}`).then(res => {
+      if (!res.data.data.length) {
+        return setIsEndOfData(true)
+      }
+      return props.addTodo(res.data.data)
+    })
+  }
 
   const _onScroll = (event) => {
     const currentPos = event.target.scrollTop
-    const isScrollDown = currentPos - this.lastPos > 0
+    const isScrollDown = currentPos - lastPos > 0
 
     if (isScrollDown) {
       if ((event.target.offsetHeight + event.target.scrollTop) / event.target.scrollHeight >= 0.95) {
-        if (!this.state.isFetching && !this.state.isEndofData) {
-          const newSkip = this.skip + 1
-          if (newSkip > this.lastSkip) {
-            this.skip = newSkip
-            this.lastSkip = newSkip
+        if (!fetching && !isEndofData) {
+          const newSkip = skip + 1
+          if (newSkip > lastSkip) {
+            skip = newSkip
+            lastSkip = newSkip
           }
-          if (this.state.isFetching) {
+          if (fetching) {
             return
           }
 
-          this.fetchData(this.props.limit || defaultLimit, this.skip)
+          fetchData(skip, defaultLimit)
+          // this.fetchData(this.props.limit || defaultLimit, this.skip)
         }
       }
     }
 
-    this.lastPos = currentPos
+    lastPos = currentPos
   }
+
+
 
   const closeModal = () => {
     setModal(false)
@@ -56,6 +124,13 @@ const MainPage = (props) => {
   const changeIsDone = (id, isDone) => () => {
     props.editTodo(id, { isDone: !isDone })
   }
+  const changeFilter = ({ target }) => {
+    setfilter(target.value)
+  }
+
+  const changeSort = ({ target }) => {
+    setSort(target.value)
+  }
   const onDeleteItem = (id) => () => {
     props.deleteTodo(id)
   }
@@ -66,7 +141,24 @@ const MainPage = (props) => {
   }
 
   return (
-    <Wrapper margin='72px 0px' padding='0px 16px' position='relative'>
+    <Wrapper margin='85px 0px' padding='0px 33px' justify='flex-start' height="calc(100vh)" position='relative' overflow='auto' onScroll={_onScroll}>
+      <AbsWrapper width='100vw' maxWidth='720px' background='white' radius='0' padding='8px'  >
+        <Fields placeholder='search...' onChange={onSearch} value={value} />
+        <Wrapper direction='row' justify='space-between' width='100%'>
+          <Dropdown
+            label='filter'
+            onChange={changeFilter}
+            value={filter}
+            options={[{ val: 'all', label: 'all' }, { val: 'done', label: 'done' }, { val: 'undone', label: 'undone' }]}
+          />
+          <Dropdown
+            value={sort}
+            onChange={changeSort}
+            label='sort'
+            options={[{ val: 0, label: 'priority' }, { val: 3, label: 'date' }]}
+          />
+        </Wrapper>
+      </AbsWrapper>
       {isModalOpen && <AddTodoModal isOpen={isModalOpen} closeModal={closeModal} selectedData={selectedData} />}
 
       {props.todos.map(todo =>
@@ -78,6 +170,7 @@ const MainPage = (props) => {
           onDelete={onDeleteItem(todo.id)}
         />)
       )}
+      <Wrapper height='120px' width='100%' />
     </Wrapper >
   )
 }
@@ -89,6 +182,7 @@ const mapDispatchToProps = dispatch =>
       getall,
       editTodo,
       deleteTodo,
+      addTodo,
     },
     dispatch,
   )
