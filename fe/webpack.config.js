@@ -21,7 +21,7 @@ const constant =
       CONF_NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     })
     : new webpack.DefinePlugin({
-      CONF_BASE_URL: JSON.stringify('http://localhost:4000'),
+      CONF_BASE_URL: JSON.stringify('https://todo-kredivo.herokuapp.com'),
       CONF_NODE_ENV: JSON.stringify(process.env.NODE_ENV),
     })
 
