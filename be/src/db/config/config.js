@@ -25,6 +25,9 @@ module.exports = {
     // "host": process.env.HOST || "",
     // "port": process.env.PORT || "5432",
     "dialect": "postgres",
-    "logging": false
+    "logging": false,
+    "dialectOptions": {
+      "ssl": true
+    }
   },
 }
