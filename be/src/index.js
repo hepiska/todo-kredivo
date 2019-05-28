@@ -22,6 +22,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(resJsonOnData)
 
+app.use("/alive", (req, res) => {
+  return res.json("alive")
+})
 app.use("/", useRouter(express))
 
 app.use(errorMidleware)
