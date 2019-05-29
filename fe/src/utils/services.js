@@ -12,5 +12,5 @@ export const services = axios.create({
 
 export const authServices = axios.create({
   baseURL: BASE_URL,
-  headers: { authorization: getTOKEN() }
+  headers: { authorization: localStorage.getItem('token') }
 })

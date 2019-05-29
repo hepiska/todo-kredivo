@@ -20,6 +20,7 @@ left: 0px;
 
 const Header = (props) => {
   const [isModalOpen, setModal] = useState(false)
+
   const logout = () => {
     props.LOGOUT()
     props.history.push('/login')

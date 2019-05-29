@@ -24,6 +24,7 @@ const RegisterPage = props => {
       try {
         const res = await services.post('/auth/register', data.data)
         setFetching(false)
+        localStorage.setItem('token', res.data.data)
         props.LOGIN(res.data.data)
         props.history.push('/')
       } catch (err) {

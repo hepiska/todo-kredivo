@@ -52,7 +52,14 @@ const MainPage = (props) => {
   let lastPos = 0
   let skip = 0
   const defaultLimit = 10
-  useEffect(async () => {
+
+  const getInitialData = async (params) => {
+    setFetching(true)
+    await props.getall(params)
+    setFetching(false)
+  }
+
+  useEffect(() => {
     const params = {}
     if (value) {
       params.q = value
@@ -63,10 +70,10 @@ const MainPage = (props) => {
     if (filter) {
       params.filter = filter
     }
-    setFetching(true)
-    await props.getall(params)
-    setFetching(false)
+    getInitialData(params)
   }, [value, sort, filter])
+
+
 
   const onSearch = ({ target }) => {
     setvalue(target.value)
