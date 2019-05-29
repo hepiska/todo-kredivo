@@ -16,6 +16,11 @@ const AbsWrapper = styled(Wrapper)`
   left:0;
 `
 
+const AbsWrapper2 = styled(Wrapper)`
+  bottom:0;
+  left:0;
+`
+
 
 const Dropdown = (props) => {
   const onChange = (e) => {
@@ -47,7 +52,7 @@ const MainPage = (props) => {
   let lastPos = 0
   let skip = 0
   const defaultLimit = 10
-  useEffect(() => {
+  useEffect(async () => {
     const params = {}
     if (value) {
       params.q = value
@@ -58,7 +63,9 @@ const MainPage = (props) => {
     if (filter) {
       params.filter = filter
     }
-    props.getall(params)
+    setFetching(true)
+    await props.getall(params)
+    setFetching(false)
   }, [value, sort, filter])
 
   const onSearch = ({ target }) => {
@@ -170,6 +177,14 @@ const MainPage = (props) => {
           onDelete={onDeleteItem(todo.id)}
         />)
       )}
+      {fetching && (
+        <AbsWrapper2 radius='0' position='fixed' width='100%' padding='20px' background="rgba(0,0,0,0.5)">
+          <Font color='white'>
+            loading..
+          </Font>
+        </AbsWrapper2>
+      )}
+
       <Wrapper height='120px' width='100%' />
     </Wrapper >
   )
