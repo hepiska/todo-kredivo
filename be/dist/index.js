@@ -28,6 +28,9 @@ app.use(_bodyParser.default.urlencoded({
 
 app.use(_bodyParser.default.json());
 app.use(_resJsonOnData.default);
+app.use("/alive", (req, res) => {
+  return res.json("alive");
+});
 app.use("/", (0, _routes.default)(express));
 app.use(_errorMidleware.errorMidleware);
 app.listen({
