@@ -23,7 +23,6 @@ const LoginPage = props => {
       try {
         const res = await services.post('/auth/login', data.data)
         setFetching(false)
-        localStorage.setItem('token', res.data.data)
         props.LOGIN(res.data.data)
         props.history.push('/')
       } catch (err) {
