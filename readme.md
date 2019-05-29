@@ -1,6 +1,7 @@
 # simple todo list
 
 ## be 
+https://todo-kredivo.herokuapp.com
 ### run stage 
 1. npm i 
 2. create database in your local devices
@@ -30,6 +31,8 @@
 
 
 ## fe
+https://todo-kredivo.firebaseapp.com/
+
 1. npm i
 2. npm start
 3. the app will run on port 8083

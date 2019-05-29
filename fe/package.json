@@ -7,6 +7,7 @@
     "start": "TARGET_ENV=stage webpack-dev-server --mode development --port 8083",
     "sitemap": "node sitemap-generator.js",
     "build": "rm -rf dist && TARGET_ENV=stage NODE_ENV=production webpack --mode production",
+    "build=prod": "rm -rf dist && TARGET_ENV=prod NODE_ENV=production webpack --mode production",
     "lint-fix": "eslint . --ext .js,.jsx -f table --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

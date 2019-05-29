@@ -69,6 +69,7 @@ const LoginPage = props => {
                 inputPadding='13px 48px 13px 36px'
                 value={data.password}
                 label='password'
+                type='password'
                 margin='16px 0px'
                 onChange={onChange}
                 placeholder='Password'
@@ -78,17 +79,21 @@ const LoginPage = props => {
               <Wrapper width='100%' direction='row' justify='flex-end' align='center' margin='16px 0 0'>
                 {fetching ? <Loaders type="Bars" color={colors.thisBlue} height={60} width={80} /> :
                   (
-                    <Button
-                      background={colors.thisBlue}
-                      onClick={onSubmit}
-                    >
-                      Log In
-                    </Button>
+                    <Wrapper width='100%' direction='row'>
+                      <Button
+                        background={colors.thisBlue}
+                        onClick={onSubmit}
+                      >
+                        masuk
+                      </Button>
+                    </Wrapper>
+
                   )}
               </Wrapper>
             </div>
           )}
         </FormValidation >
+        <Button margin='12px 0px' size='content' onClick={() => props.history.push('/register')}><Font>belum punya akun register </Font></Button>
       </Wrapper>
     </Wrapper>
   )

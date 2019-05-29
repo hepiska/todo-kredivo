@@ -39,15 +39,15 @@ const htmlPlugin = new HtmlWebPackPlugin({
 const copyPlugin = new CopyWebpackPlugin([{ from: 'public' }])
 
 // gzip
-const gziPlugin = new WebpackCompretion({
-  filename(asset) {
-    const newAsset = asset.replace('.gz', '')
-    return newAsset
-  },
-  algorithm: 'gzip',
-  test: /\.(js)$/,
-  deleteOriginalAssets: false,
-})
+// const gziPlugin = new WebpackCompretion({
+//   filename(asset) {
+//     const newAsset = asset.replace('.gz', '')
+//     return newAsset
+//   },
+//   algorithm: 'gzip',
+//   test: /\.(js)$/,
+//   deleteOriginalAssets: false,
+// })
 
 const uglifyjs = new UglifyJsPlugin({
   cache: true,
@@ -213,7 +213,7 @@ module.exports = {
       cssPlugin,
       uglifyjs,
       new webpack.optimize.AggressiveMergingPlugin(),
-      gziPlugin,
+      // gziPlugin,
       copyPlugin,
       // new BundleAnalyzerPlugin(),
       // manifestPlugin,

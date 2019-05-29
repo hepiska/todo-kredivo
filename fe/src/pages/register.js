@@ -86,6 +86,7 @@ const RegisterPage = props => {
                 label='password'
                 margin='16px 0px'
                 onChange={onChange}
+                type='password'
                 placeholder='Password'
                 error={!validation.password && '* invalid password'}
               />
