@@ -36,3 +36,5 @@ https://todo-kredivo.firebaseapp.com/
 1. npm i
 2. npm start
 3. the app will run on port 8083
+ 
+> use mobile view for better experience
