@@ -8,6 +8,16 @@
 4. run "npm run migrate-dev"
 5. run "npm run watch"
 
+### end point 
+| endpoint        | query           | body  | method |
+| ------------- |:-------------:| -----:|--------|
+| /auth/register    | - | name,email,password | post|
+| /auth/login     |    -   |   email, password | post
+| /todo/user | q=[str], filter=[done,undone,all]|-   |  get |
+|/todo/:id | -| -| get|
+| /todo/:id|-|-|put|
+| /todo/:id|-|-|delete|
+
 ### run test 
 1. create database in your local devices
 3. change db confjig file in './src/db/config.config.js' according to your db seting
